@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" type="text/css" href="./perlinJS.css">
+        <script src="./perlinJS.js"></script>
+    </head>
+    <body>
+        <div id="perlinCanvas">
+            <canvas id="perlin">There is no canvas!!!</canvas>
+        </div>
+
+        <table id="infobox">
+        <tr><td>
+        Perlin noise class implementation.<br>
+        Creates a 2D random image of a heightmap defined by the size of the map and the cell size.<br>
+        A Javascript implementation of<br>
+        <a href="https://en.wikipedia.org/wiki/Perlin_noise#Implementation">https://en.wikipedia.org/wiki/Perlin_noise#Implementation</a>
+        </td></tr>
+        </table>
+
+        <script>
+        "use strict";
+
+        const SIZE_X=window.innerWidth;
+        const SIZE_Y=window.innerHeight;
+
+        document.getElementById("perlin").setAttribute("width",SIZE_X);
+        document.getElementById("perlin").setAttribute("height",SIZE_Y);
+
+
+        var c = document.getElementById("perlin");
+        var ctx = c.getContext("2d");
+        var imgData = ctx.createImageData(SIZE_X, SIZE_Y);
+
+        var octive1=new perlin(SIZE_X,SIZE_Y,1024);
+        var octive2=new perlin(SIZE_X,SIZE_Y,512);
+        var octive3=new perlin(SIZE_X,SIZE_Y,128);
+        var octive4=new perlin(SIZE_X,SIZE_Y,64);
+        var octive5=new perlin(SIZE_X,SIZE_Y,32);
+
+        var t=0;
+        for(var j=0; j<SIZE_Y; j++)
+            for (var i=0; i < SIZE_X; i++)
+            {
+                let c=octive1.getHeight(i,j);
+                let c2=octive2.getHeight(i,j);
+                let c3=octive3.getHeight(i,j);
+                let c4=octive4.getHeight(i,j);
+                let c5=octive5.getHeight(i,j);
+
+                //adjust the colors to make look like blue sky and white clouds
+                let pixelData=Math.abs(c*2+c2+c3+c4/2+c5/4);
+
+                if(pixelData>300) pixelData=300-(pixelData-300);
+			    if(pixelData<0) pixelData=0;
+
+                imgData.data[t] = pixelData;
+                imgData.data[t+1] = pixelData;
+                imgData.data[t+2] = 255;
+                imgData.data[t+3] = 255;
+                t+=4;
+            }
+
+            ctx.putImageData(imgData, 0, 0); 
+
+        </script>
+    </body>
+</html>
