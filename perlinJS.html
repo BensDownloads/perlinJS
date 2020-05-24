@@ -12,8 +12,8 @@
 
         <table id="infobox">
         <tr><td>
-        Perlin noise class implementation.<br>
-        Creates a 2D random image of a heightmap defined by the size of the map and the cell size.<br>
+        Perlin noise class<br>
+        Creates a 2D random image of clouds.<br>
         A Javascript implementation of<br>
         <a href="https://en.wikipedia.org/wiki/Perlin_noise#Implementation">https://en.wikipedia.org/wiki/Perlin_noise#Implementation</a>
         </td></tr>
@@ -50,7 +50,7 @@
                 let c5=octive5.getHeight(i,j);
 
                 //adjust the colors to make look like blue sky and white clouds
-                let pixelData=Math.abs(c*2+c2+c3+c4/2+c5/4);
+                let pixelData=Math.abs(c*2+c2+c3+c4/2+c5/4)*255;
 
                 if(pixelData>300) pixelData=300-(pixelData-300);
 			    if(pixelData<0) pixelData=0;
